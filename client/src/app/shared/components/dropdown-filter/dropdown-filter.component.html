@@ -1,0 +1,13 @@
+<label class="label-color" (click)="$event.stopPropagation(); myDrop.open();">{{labelName}}</label>
+
+<div ngbDropdown class="drop-filter" #myDrop="ngbDropdown">
+  <button class="btn btn-outline-primary drp-btn" [ngClass]="{'label-color': !selectedValue}" id="dropdownBasic1"
+    ngbDropdownToggle>
+    <span>
+      {{selectedValue ? selectedValue : placeholder}}
+    </span>
+  </button>
+  <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+    <button *ngFor="let item of dropItems" ngbDropdownItem (click)="onItemSelection(item)">{{item}}</button>
+  </div>
+</div>

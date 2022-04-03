@@ -1,0 +1,36 @@
+<div class="character-list-wrapper">
+  <h2 class="header-color">Lord of the Rings</h2>
+
+  <div class="filter-sec row">
+    <ng-container *ngFor="let item of dropdownLookup">
+      <div class="col">
+        <app-dropdown-filter [labelName]="item.label" [placeholder]="item.placeholder"
+          [selectedValue]="item.selectedValue" [dropItems]="item.data"
+          (OnDropDownSelection)="filterSelected($event, item)">
+        </app-dropdown-filter>
+      </div>
+    </ng-container>
+    <button class="clear-btn" (click)="resetFilters()">Clear All</button>
+  </div>
+
+  <h5 class="header-color">Results:</h5>
+  <div class="results-sec row" *ngIf="showResults(); else selectFilters">
+    <ng-container *ngFor="let item of characterData | filterArray : selectedFilters">
+      <div class="col-5 result-sec-col">
+        <app-cards [cardItem]="item"></app-cards>
+      </div>
+    </ng-container>
+    <h6 class="header-color" *ngIf="(characterData | filterArray : selectedFilters).length === 0" class="header-color">
+      No Results Found</h6>
+  </div>
+</div>
+
+<ng-template #selectFilters>
+  <h6 class="header-color">Please Select value from any 1 or all dropdowns to show result.</h6>
+</ng-template>
+
+
+<p class="position-fixed result-count"
+  *ngIf="(characterData | filterArray : selectedFilters).length > 0 && showResults()">We received
+  {{(characterData | filterArray : selectedFilters).length}}
+  {{(characterData | filterArray : selectedFilters).length === 1 ? 'result' : 'results'}}</p>
